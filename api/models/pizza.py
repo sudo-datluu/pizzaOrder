@@ -48,5 +48,3 @@ class Pizza(Product):
     )
     def get_topping(self) -> Topping:
         return self.Topping[self.topping]
-
-
