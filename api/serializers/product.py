@@ -14,3 +14,19 @@ class ProductSerializer(serializers.ModelSerializer):
             "pricePerUnit",
             "caloriesPerUnit"
         ]
+class PizzaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pizza
+        fields = [
+            "id",
+            "category",
+            "name",
+            "get_absolute_url",
+            "description",
+            "maxQty",
+            "pricePerUnit",
+            "caloriesPerUnit",
+            "pizzaBase",
+            "size",
+            "topping"
+        ]
