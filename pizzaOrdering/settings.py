@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import environ
+import datetime
 env = environ.Env()
 environ.Env.read_env()
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_simplejwt",
     "corsheaders",
 
     "api"
@@ -137,3 +139,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+JWT_AUTH = {
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30*3600*24),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+}

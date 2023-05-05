@@ -1,2 +1,2 @@
 from .product import *
-from .auth import Login, CustomerSignUp
+from .auth import *

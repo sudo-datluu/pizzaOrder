@@ -4,7 +4,7 @@ import django.contrib.auth.password_validation as validators
 from django.core import exceptions
 from validate_email import validate_email
 
-class CustomerSignUpSerializer(serializers.Serializer):
+class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=255, required=True)
     password = serializers.CharField(max_length=255, required=True, write_only=True)
 
@@ -21,4 +21,7 @@ class CustomerSignUpSerializer(serializers.Serializer):
 
          # the exception raised here is different than serializers.ValidationError
         except exceptions.ValidationError as e:
-            raise serializers.ValidationError(list(e)) 
+            raise serializers.ValidationError(list(e))
+
+class EmployerSerializer(SignUpSerializer):
+    role = serializers.ChoiceField(choices=['S', 'A'], required=True) 

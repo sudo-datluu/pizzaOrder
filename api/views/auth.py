@@ -1,11 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework import status, permissions
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.contrib.auth import authenticate
 
-from api.models.users import CustomUser, Staff, Customer
-from api.serializers import CustomUserSerializer, CustomerSignUpSerializer
+from api.models.users import CustomUser, Staff, Customer, Admin
+from api.serializers import CustomUserSerializer, SignUpSerializer, EmployerSerializer
 
 from .const import RESPONSE_FORBIDDEN, RESPONSE_NOT_FOUND, get_bad_request
 
@@ -43,7 +44,7 @@ Sign up for customer
 '''
 class CustomerSignUp(APIView):
     def post(self, request):
-        serializer = CustomerSignUpSerializer(data=request.data)
+        serializer = SignUpSerializer(data=request.data)
         if serializer.is_valid():
             username = request.data.get('username')
             password = request.data.get('password')
@@ -56,3 +57,27 @@ class CustomerSignUp(APIView):
             return Response(serializer.data)
         else:
             return get_bad_request(msg=serializer.errors)
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def createEmployerAccount(request):
+    serializer = EmployerSerializer(data=request.data)
+    if serializer.is_valid():
+        user_request = request.user
+        if isinstance(user_request, CustomUser) and user_request.role != 'A':
+            return RESPONSE_FORBIDDEN
+        username = request.data.get('username')
+        password = request.data.get('password')
+        role = request.data.get('role')
+        userTbl = {
+            'A': Admin(username=username, email=username),
+            'S': Staff(username=username, email=username)
+        }
+        user = userTbl[role]
+        user.set_role(role)
+        user.set_password(password)
+        user.save()
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
+    else:
+        return get_bad_request(msg=serializer.errors)
