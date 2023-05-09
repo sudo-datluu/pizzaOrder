@@ -8,6 +8,8 @@ from rest_framework.decorators import api_view
 from api.models import Product
 from api.serializers import ProductSerializer
 
+from .const import RESPONSE_NOT_FOUND
+
 class ProductList(APIView):
     def get(self, request, format=None):
         products = Product.objects.all()
@@ -22,9 +24,12 @@ class ProductDetail(APIView):
             raise Http404
     
     def get(self, request, product_id, format=None):
-        product = self.get_object(product_id=product_id)
-        serializer = ProductSerializer(product)
-        return Response(serializer.data)
+        try:
+            product = self.get_object(product_id=product_id)
+            serializer = ProductSerializer(product)
+            return Response(serializer.data)
+        except Http404:
+            return RESPONSE_NOT_FOUND
 
 @api_view(['POST'])
 def search_product(request):

@@ -64,7 +64,7 @@ def createEmployerAccount(request):
     serializer = EmployerSerializer(data=request.data)
     if serializer.is_valid():
         user_request = request.user
-        if isinstance(user_request, CustomUser) and user_request.role != 'A':
+        if Admin.objects.get(username=user_request.username):
             return RESPONSE_FORBIDDEN
         username = request.data.get('username')
         password = request.data.get('password')
