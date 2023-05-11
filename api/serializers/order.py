@@ -16,12 +16,17 @@ class OrderLineDetailSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderLineDetailSerializer(many=True)
     customer = CustomUserSerializer()
+    status = serializers.SerializerMethodField()
+
+    def get_status(self, obj):
+        return obj.get_status_display()
     class Meta:
         model = Order
         fields = [
             "items",
             "customer",
-            "totalPrice"
+            "totalPrice",
+            "status"
         ]
 
 class OrderLineSerializer(serializers.ModelSerializer):
@@ -43,13 +48,15 @@ class OrderLineSerializer(serializers.ModelSerializer):
         
 class CreateOrderSerializer(serializers.ModelSerializer):
     items = OrderLineSerializer(many=True)
-    
+    status = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
         fields = [
             "id",
             "items",
-            "totalPrice"
+            "totalPrice",
+            "status"
         ]
     def create(self, validated_data):
         items = validated_data.pop('items')
@@ -59,3 +66,6 @@ class CreateOrderSerializer(serializers.ModelSerializer):
             OrderLine.objects.create(order=order, **item)
         
         return order
+
+    def get_status(self, obj):
+        return obj.get_status_display()

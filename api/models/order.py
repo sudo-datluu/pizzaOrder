@@ -8,6 +8,17 @@ class Order(models.Model):
     totalPrice = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     stripe_token = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    class OrderStatus(models.TextChoices):
+        CONFIRMED = 'CF', _("Confirmed")
+        FULLFILED = 'FF', _("Fullfiled")
+        CANCELED = 'CC', _("Canceled")
+
+    status = models.CharField(
+        max_length=2,
+        choices=OrderStatus.choices,
+        default=OrderStatus.CONFIRMED
+    )
 
     class Meta:
         ordering = ['-created_at',] 
