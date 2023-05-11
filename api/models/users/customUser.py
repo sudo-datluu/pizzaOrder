@@ -18,4 +18,7 @@ class CustomUser(User):
         if role:
             self.role = role
             self.save()
+    
+    def is_employer(self):
+        return self.role in ('S', 'A')
         

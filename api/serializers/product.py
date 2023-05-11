@@ -14,6 +14,11 @@ class ProductSerializer(serializers.ModelSerializer):
             "pricePerUnit",
             "caloriesPerUnit"
         ]
+
+    def getSerialFromID(self, productID):
+        product = Product.objects.get(id=productID)
+        return ProductSerializer(product)
+    
 class PizzaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pizza
