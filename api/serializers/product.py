@@ -12,7 +12,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "description",
             "maxQty",
             "pricePerUnit",
-            "caloriesPerUnit"
+            "caloriesPerUnit",
+            "img_url"
         ]
 
     def getSerialFromID(self, productID):
@@ -33,5 +34,6 @@ class PizzaSerializer(serializers.ModelSerializer):
             "caloriesPerUnit",
             "pizzaBase",
             "size",
-            "topping"
+            "topping",
+            "img_url"
         ]

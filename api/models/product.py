@@ -23,6 +23,7 @@ class Product(models.Model):
     pricePerUnit = models.DecimalField(max_digits=6, decimal_places=2)
     caloriesPerUnit = models.DecimalField(max_digits=6, decimal_places=2, default='1000.50')
     dateAdded = models.DateTimeField(auto_now_add=True)
+    img_url = models.CharField(max_length=300, default='')
 
     class Meta:
         db_table = 'product'
