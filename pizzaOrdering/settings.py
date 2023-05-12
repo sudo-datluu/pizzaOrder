@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import environ
 import datetime
+import os
 env = environ.Env()
 environ.Env.read_env()
 
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-dv751$7nr!kasy!yu0q$tdo9q68pua1t@zt3at#j9ixxej)#o1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", ".now.sh"]
 
 
 # Application definition
@@ -156,3 +157,6 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30*3600*24),
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
