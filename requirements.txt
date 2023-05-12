@@ -4,6 +4,6 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==4.8.0
 dnspython==2.3.0
 pip==23.0.1
-psycopg2==2.8.6
+psycopg2-binary
 djoser==2.1.0
-git+https://gitea.ksol.io/karolyi/py3-validate-email@v1.0.9
+django-environ
