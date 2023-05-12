@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-dv751$7nr!kasy!yu0q$tdo9q68pua1t@zt3at#j9ixxej)#o1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", "datluu.pythonanywhere.com"]
 
 
 # Application definition
@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     "api"
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:8080"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "https://iza-74055.bubbleapps.io/*"
+]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",

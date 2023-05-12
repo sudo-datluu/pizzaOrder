@@ -2,7 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 import django.contrib.auth.password_validation as validators
 from django.core import exceptions
-from validate_email import validate_email
+import re
+# from validate_email import validate_email
 
 class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=255, required=True)
@@ -11,7 +12,8 @@ class SignUpSerializer(serializers.Serializer):
     def validate_username(self, value):
         if User.objects.filter(username=value).exists():
             raise serializers.ValidationError("Username already existed")
-        if not validate_email(value):
+        regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+        if not re.fullmatch(regex, value):
             raise serializers.ValidationError("Invalid email format")
     
     def validate_password(self, value):
