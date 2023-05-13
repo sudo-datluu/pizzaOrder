@@ -16,6 +16,12 @@ class ProductList(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
+class PizzaList(APIView):
+    def get(self, request, format=None):
+        products = Pizza.objects.all()[:100]
+        serializer = PizzaSerializer(products, many=True)
+        return Response(serializer.data)
+
 class ProductDetail(APIView):
     def get_object(self, product_id):
         try:
