@@ -21,6 +21,9 @@ class ProductSerializer(serializers.ModelSerializer):
         return ProductSerializer(product)
     
 class PizzaSerializer(serializers.ModelSerializer):
+    pizzaBase = serializers.SerializerMethodField()
+    size = serializers.SerializerMethodField()
+    topping = serializers.SerializerMethodField()
     class Meta:
         model = Pizza
         fields = [
@@ -37,3 +40,12 @@ class PizzaSerializer(serializers.ModelSerializer):
             "topping",
             "img_url"
         ]
+    
+    def get_pizzaBase(self, obj):
+        return obj.get_pizzaBase_display()
+
+    def get_size(self, obj):
+        return obj.get_size_display()
+
+    def get_topping(self, obj):
+        return obj.get_topping_display()

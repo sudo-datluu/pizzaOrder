@@ -28,7 +28,6 @@ class Order(models.Model):
     
     def __str__(self):
         return '%s' % self.id
-
 class OrderLine(models.Model):
     class Meta:
         db_table = 'order_line'
