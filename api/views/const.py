@@ -15,6 +15,13 @@ RESPONSE_NOT_FOUND = Response (
     }, status=status.HTTP_404_NOT_FOUND
 )
 
+RESPONSE_NOT_ACCEPTABLE = Response(
+    data={
+        'msg': 'Not Acceptable',
+        'status': 406
+    }, status=status.HTTP_406_NOT_ACCEPTABLE
+)
+
 def get_bad_request(msg) -> Response:
     return Response(
         {

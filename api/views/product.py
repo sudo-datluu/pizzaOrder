@@ -5,28 +5,29 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from api.models import Product
-from api.serializers import ProductSerializer
+from api.models import Product, Pizza
+from api.serializers import ProductSerializer, PizzaSerializer
 
 from .const import RESPONSE_NOT_FOUND
 
 class ProductList(APIView):
     def get(self, request, format=None):
-        products = Product.objects.all()
+        products = Product.objects.all()[:100]
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductDetail(APIView):
     def get_object(self, product_id):
         try:
-            return Product.objects.get(id=product_id)
+            product = Product.objects.get(id=product_id)
+            return product if product.category != 'PZ' else Pizza.objects.get(id=product_id)
         except Product.DoesNotExist:
             raise Http404
     
     def get(self, request, product_id, format=None):
         try:
             product = self.get_object(product_id=product_id)
-            serializer = ProductSerializer(product)
+            serializer = ProductSerializer(product) if product.category != 'PZ' else PizzaSerializer(product)
             return Response(serializer.data)
         except Http404:
             return RESPONSE_NOT_FOUND
@@ -40,3 +41,9 @@ def search_product(request):
         return Response(serializer.data)
     else:
         return ProductList.get()
+
+@api_view(['GET'])
+def get_top_products(request):
+    products = [Product.objects.filter(category=cat).first() for cat in Product.Category]
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
