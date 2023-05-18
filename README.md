@@ -9,16 +9,16 @@ Below you will find an overview of the project structure and organization.
 The project structure is organized as follows:
 
 pizzaOrder/
-├── api/ # The backend application 
-│ ├── models/ # Module contain the data type of the objects
-│ ├── serializers # Module help to connect the database to the desired structure to request
-│ └── views/ # Functions handle api request
-├── urls.py # File defines url pattern for api 
-├── pizzaOrdering/ # Main project application
-│ ├── settings # Setting of the project
-│ ├── urls # Construct pattern for all application in the project
-├── .gitignore 
-├── README.md
-└── manage.py # File manage the project
-└── requirements.txt # Requirement package
-└── vercel.json # Config file for vercel deployment 
+├── api/ # The backend application  <br>
+│ ├── models/ # Module contain the data type of the objects  <br>
+│ ├── serializers # Module help to connect the database to the desired structure to request  <br>
+│ └── views/ # Functions handle api request  <br>
+├── urls.py # File defines url pattern for api  <br>
+├── pizzaOrdering/ # Main project application  <br>
+│ ├── settings # Setting of the project  <br>
+│ ├── urls # Construct pattern for all application in the project  <br>
+├── .gitignore  <br>
+├── README.md <br>
+└── manage.py # File manage the project <br>
+└── requirements.txt # Requirement package <br>
+└── vercel.json # Config file for vercel deployment  <br>
